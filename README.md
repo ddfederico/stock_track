@@ -25,6 +25,7 @@ our database, we will analyze the data in order to develop insights that may inf
 ## What I learned
   * How to set up and use Docker
   * How to install Postgres SQL onto a Docker container in order to create a database 
+  * Python
   * The following python librries: yfinance, psaw, psycopg2, pandas
   * GitHub 
 
