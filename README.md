@@ -1,20 +1,20 @@
 # Stock Track Project
 
 ## Overview
-The purpose of this project is to automate the collection and storage of key data relating to stocks. Once the data is being collected and stored in 
+The purpose of this project is to automate the collection and storage of key data points relating to stocks. Once the data is being collected and stored in 
 our database, we will analyze the data in order to develop insights that may influence personal investment strategies. The project started with a curiosity of a the possible correlation between the number of times a stock was mention in r/wallstreetbets and the stock's price. I was curious to see if I could predict another GME short squeeze situation by stock mentions in subreddit. 
 </br>There are 6 main pieces to this project:</br>
 1. Collection of stock names and tickers <i>(populate_stocks.py)<i>
 2. Collection of stock prices <i>(populate_stock_prices.py)<i>
-3. Collection ARK ETF fund breakdown of holdings <i>(populate_ark_data.py)<i>
+3. Collection ARK ETF fund holdings <i>(populate_ark_data.py)<i>
 4. Collection of Reddit r/wallstreetbets stock mentions <i>(wsb_collector.py)<i>
 5. SQL queries to answer question about data <i>(sql_queries.sql)<i>
 6. Create digestible data visualizations using matplotlib <i>(in progress...)<i>
 
 ## Prerequisites
-1. Set up a database <i>(I used a docker container with postgres sql install on top of it)<i>
+1. Set up a database <i>(I used a Docker container with Postgres SQL install on top of it)<i>
 2. Create an Alpaca account <i>(This is what I used in order to pull stock tickers)<i>
-3. A SQL client <i>(I used TablePlus but there are many other option to choose from)<i> 
+3. A SQL client <i>(I used TablePlus but there are many other options to choose from)<i> 
 4. Import necessary python libraries
     * alpaca_trade_api
     * psycopg2
