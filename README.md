@@ -2,8 +2,8 @@
 
 ## Overview
 The purpose of this project is to automate the collection and storage of key data relating to stocks. Once the data is being collected and stored in 
-our database, we will analyze the data in order to develop insights that may influence personal investment strategies. The project started with a curiosity of a possible correlation between the number of times a stock was mention in r/wallstreetbets and it's price. I was curious to see if I could predict another GME short squeeze by the subreddit. 
-<p>There are 6 main pieces to this project:<p>
+our database, we will analyze the data in order to develop insights that may influence personal investment strategies. The project started with a curiosity of a the possible correlation between the number of times a stock was mention in r/wallstreetbets and the stock's price. I was curious to see if I could predict another GME short squeeze situation by stock mentions in subreddit. 
+</br>There are 6 main pieces to this project:</br>
 1. Collection of stock names and tickers <i>(populate_stocks.py)<i>
 2. Collection of stock prices <i>(populate_stock_prices.py)<i>
 3. Collection ARK ETF fund breakdown of holdings <i>(populate_ark_data.py)<i>
