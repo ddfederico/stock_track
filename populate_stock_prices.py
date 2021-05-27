@@ -5,6 +5,7 @@ import psycopg2.extras
 import pandas
 import datetime
 from datetime import date
+import time
 
 #CONNECT TO DATABASE
 db_connection = psycopg2.connect(host=credentials.DB_HOST, database=credentials.DB_NAME, user=credentials.DB_USER, password=credentials.DB_PASS)
@@ -36,6 +37,7 @@ else:
     end_date = date.today()
 
 for stock in stocks:
+    start = time.time()
 #ASSIGN START DATE FOR COLLECTING START DATE 
     if stock['dt']:
         start_date = stock['dt'].date() + datetime.timedelta(days=1)
@@ -55,7 +57,7 @@ for stock in stocks:
 
 #INSERT STOCK ID FROM DATABASE                      
         historical_prices.insert(1, 'stock_id', stock['id'])
-    
+
 #INSERT DATA TO DATABASE    
         for index, row in historical_prices.iterrows():
             try:
@@ -68,4 +70,5 @@ for stock in stocks:
                 print(e)
                 db_connection.rollback()
         print(f"Inserting {stock['symbol']}: {stock['id']} price data into database")
+        print(round(time.time()-start,2))
         db_connection.commit()
