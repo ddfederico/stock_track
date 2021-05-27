@@ -1,3 +1,5 @@
+from time import time
+from numpy.lib.function_base import insert
 import credentials
 import yfinance
 import psycopg2
@@ -19,7 +21,7 @@ db_query.execute("""
                 LEFT JOIN stock_price
                 ON stocks.id = stock_price.stock_id
 
-                WHERE stock_price.dt IS NOT null OR date_added > CURRENT_DATE-7 
+                WHERE stock_price.dt IS NOT null OR date_added > CURRENT_DATE-21 
 
                 GROUP BY id, symbol
 
@@ -35,6 +37,7 @@ elif date.today().weekday() == 6:
     end_date = date.today() - datetime.timedelta(days=2)
 else: 
     end_date = date.today()
+
 
 for stock in stocks:
     start = time.time()
@@ -56,19 +59,20 @@ for stock in stocks:
         
 
 #INSERT STOCK ID FROM DATABASE                      
-        historical_prices.insert(1, 'stock_id', stock['id'])
+        if historical_prices.empty == False:
+            historical_prices.insert(1, 'stock_id', stock['id'])
+#DROP UNNECESSARY COLUMNS 
+            drop_columns = historical_prices.drop(['Dividends', 'Stock Splits', 'Adj Close'], axis = 1)
+#CONVERT DATAFRAME TO VALUES LIST         
+            stock_price_data = drop_columns.reset_index().values.tolist()
+        
+            insert_query = 'INSERT INTO stock_price (dt, open, stock_id, high, low, close, volume) VALUES %s'
 
-#INSERT DATA TO DATABASE    
-        for index, row in historical_prices.iterrows():
             try:
-                db_query.execute("""
-                    INSERT INTO stock_price (stock_id, dt, open, high, low, close, volume)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s)
-                    """, (row['stock_id'], index, row['Open'], row['High'], row['Low'], row['Close'], row['Volume'])
-                    )
+                psycopg2.extras.execute_values(db_query, insert_query, stock_price_data, template=None, page_size=100)
             except Exception as e:
                 print(e)
                 db_connection.rollback()
-        print(f"Inserting {stock['symbol']}: {stock['id']} price data into database")
-        print(round(time.time()-start,2))
-        db_connection.commit()
+            print(f"Inserting {stock['symbol']}: {stock['id']} price data into database")
+            print(round(time.time()-start, 2))
+            db_connection.commit() 
