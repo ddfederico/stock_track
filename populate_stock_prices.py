@@ -1,6 +1,3 @@
-from time import time
-from numpy.lib.function_base import insert
-import credentials
 import yfinance
 import psycopg2
 import psycopg2.extras
@@ -8,9 +5,13 @@ import pandas
 import datetime
 from datetime import date
 import time
+import credential_collector
 
 #CONNECT TO DATABASE
-db_connection = psycopg2.connect(host=credentials.DB_HOST, database=credentials.DB_NAME, user=credentials.DB_USER, password=credentials.DB_PASS)
+db_connection = psycopg2.connect(host=credential_collector.DB_HOST, 
+                                database=credential_collector.DB_NAME, 
+                                user=credential_collector.DB_USER, 
+                                password=credential_collector.DB_PASS)
 
 db_query = db_connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 

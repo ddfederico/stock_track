@@ -1,11 +1,15 @@
-import credentials
 import csv
 import psycopg2
 import psycopg2.extras
 from datetime import date
 import requests
+import credential_collector
 
-db_connection = psycopg2.connect(host=credentials.DB_HOST, database=credentials.DB_NAME, user=credentials.DB_USER, password=credentials.DB_PASS)
+#CONNECT TO DATABASE
+db_connection = psycopg2.connect(host=credential_collector.DB_HOST, 
+                                database=credential_collector.DB_NAME, 
+                                user=credential_collector.DB_USER, 
+                                password=credential_collector.DB_PASS)
 
 db_query = db_connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -33,6 +37,8 @@ for etf in etfs:
         csv_url = 'https://ark-funds.com/wp-content/fundsiteliterature/csv/ARK_ISRAEL_INNOVATIVE_TECHNOLOGY_ETF_IZRL_HOLDINGS.csv'
     if etf['symbol'] == 'PRNT':
         csv_url = 'https://ark-funds.com/wp-content/fundsiteliterature/csv/THE_3D_PRINTING_ETF_PRNT_HOLDINGS.csv'
+    if etf['symbol'] == 'ARKX':
+        csv_url ='https://ark-funds.com/wp-content/fundsiteliterature/csv/ARK_SPACE_EXPLORATION_&_INNOVATION_ETF_ARKX_HOLDINGS.csv'
 
     with requests.Session() as s:
         download = s.get(csv_url, headers=headers)

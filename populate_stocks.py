@@ -1,14 +1,21 @@
-import credentials
 import alpaca_trade_api as tradeapi
 import psycopg2
 import psycopg2.extras
 from datetime import date
+import credential_collector
 
-db_connection = psycopg2.connect(host=credentials.DB_HOST, database=credentials.DB_NAME, user=credentials.DB_USER, password=credentials.DB_PASS)
+#CONNECT TO DATABASE
+db_connection = psycopg2.connect(host=credential_collector.DB_HOST, 
+                                database=credential_collector.DB_NAME, 
+                                user=credential_collector.DB_USER, 
+                                password=credential_collector.DB_PASS)
 
 db_query = db_connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-api_connection = tradeapi.REST(credentials.API_KEY, credentials.API_SECRET, base_url=credentials.API_URL)
+api_connection = tradeapi.REST(credential_collector.API_KEY, 
+                            credential_collector.API_SECRET, 
+                            base_url=credential_collector.API_URL
+                            )
 
 stocks = api_connection.list_assets()
 

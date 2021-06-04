@@ -1,13 +1,17 @@
 from psaw import PushshiftAPI
-import credentials
 import datetime
 import psycopg2
 import psycopg2.extras
 import re
 import datetime as dt
+import credential_collector
 
-#DATABASE CONNECTION 
-db_connection = psycopg2.connect(host=credentials.DB_HOST, database=credentials.DB_NAME, user=credentials.DB_USER, password=credentials.DB_PASS)
+#CONNECT TO DATABASE
+db_connection = psycopg2.connect(host=credential_collector.DB_HOST, 
+                                database=credential_collector.DB_NAME, 
+                                user=credential_collector.DB_USER, 
+                                password=credential_collector.DB_PASS)
+
 db_query = db_connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 #QUERY STOCKS TABLE IN DATABASE
